@@ -9,11 +9,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Lato:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
+/* =================== BASE =================== */
 body{
   margin:0;
   font-family:'Lato', sans-serif;
-  background:#f4f1ec url('https://www.transparenttextures.com/patterns/pw-pattern.png') repeat;
   color:#4a3f35;
+  background:
+    linear-gradient(135deg, rgba(255,250,245,0.95) 0%, rgba(245,240,235,0.95) 100%),
+    url('https://www.transparenttextures.com/patterns/diamond-upholstery.png') repeat;
 }
 
 /* CABEÇALHO */
@@ -76,8 +79,6 @@ header p{
   border-radius:8px;
   box-shadow:0 0 30px rgba(0,0,0,0.5);
 }
-
-/* CONTROLES */
 .nav,.close{
   position:absolute;
   color:#fff;
@@ -97,6 +98,7 @@ header p{
   font-size:38px;
 }
 
+/* FOOTER */
 footer{
   text-align:center;
   padding:20px;
@@ -124,6 +126,34 @@ footer{
     scroll-snap-align: start;
     border-radius:12px;
   }
+
+  /* Botões de navegação do carrossel */
+  .carrossel-nav{
+    position:fixed;
+    top:50%;
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    pointer-events:none;
+    z-index:10;
+  }
+  .carrossel-nav .prev,
+  .carrossel-nav .next{
+    pointer-events:auto;
+    font-size:40px;
+    color:#4a3f35;
+    cursor:pointer;
+    user-select:none;
+    padding:10px;
+    background:rgba(255,255,255,0.7);
+    border-radius:50%;
+    margin:0 10px;
+    transition:0.3s;
+  }
+  .carrossel-nav .prev:hover,
+  .carrossel-nav .next:hover{
+    background:rgba(255,255,255,0.95);
+  }
 }
 </style>
 </head>
@@ -135,8 +165,16 @@ footer{
   <p>Portanto, o que Deus pôs sob o mesmo jugo, não o separe o homem.</p>
 </header>
 
+<!-- GALERIA -->
 <section class="galeria" id="galeria"></section>
 
+<!-- NAVEGAÇÃO CELULAR -->
+<div class="carrossel-nav">
+  <span class="prev" onclick="carrosselAnterior()">❮</span>
+  <span class="next" onclick="carrosselProximo()">❯</span>
+</div>
+
+<!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
   <span class="close" onclick="fechar()">×</span>
   <span class="nav prev" onclick="anterior()">❮</span>
@@ -146,6 +184,7 @@ footer{
 
 <footer>Jr.</footer>
 
+<!-- SCRIPT TITULO ROLANTE -->
 <script>
 let titulo = " Everton & Lorena ";
 let pos = 0;
@@ -155,6 +194,7 @@ setInterval(() => {
 }, 300);
 </script>
 
+<!-- SCRIPT GALERIA -->
 <script>
 const imagens = [
 'fotos/foto_001.jpg','fotos/foto_002.jpg','fotos/foto_003.jpg',
@@ -209,6 +249,14 @@ function proxima(){
 function anterior(){
   atual=(atual-1+imagens.length)%imagens.length;
   document.getElementById('lightbox-img').src=imagens[atual];
+}
+
+// CARROSSEL CELULAR
+function carrosselProximo(){
+  gal.scrollBy({ left: gal.clientWidth * 0.8, behavior: 'smooth' });
+}
+function carrosselAnterior(){
+  gal.scrollBy({ left: -gal.clientWidth * 0.8, behavior: 'smooth' });
 }
 </script>
 
